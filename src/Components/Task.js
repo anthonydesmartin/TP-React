@@ -1,6 +1,6 @@
-import EditTask from './EditTask';
-import {useState} from 'react';
-import Coopernet from '../Services/Coopernet';
+import EditTask from "./EditTask";
+import {useState} from "react";
+import Coopernet from "../Services/Coopernet";
 
 const Task = (props) => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -10,25 +10,9 @@ const Task = (props) => {
   const handleSubmitTask = (e) => {
     e.preventDefault();
     handleCloseEditModal();
-    const label = document.getElementById('label').value;
-    const description = document.getElementById('description').value;
-    const ended = document.getElementById('ended').value;
-    const copy_tasks = [...props.tasks].map(task => {
-      if (task.id == props.task.id) {
-        task.label;
-      :
-        label,
-            task.description;
-      :
-        description,
-            task.ended;
-      :
-        ended,
-            task.isValidate;
-      :
-        props.task.isValidate,
-      }
-    });
+    const label = document.getElementById("label").value;
+    const description = document.getElementById("description").value;
+    const ended = document.getElementById("ended").value;
     const newTask = {
       id: props.task.id,
       label: label,
@@ -36,11 +20,17 @@ const Task = (props) => {
       ended: ended,
       isValidate: props.task.isValidate,
     };
+    const update_tasks = props.tasks.map((task) => {
+      if (task.id == props.task.id) {
+        return newTask;
+      }
+      return task;
+    });
     try {
-      Coopernet.updateTask(newTask, props.tasks.length);
-      props.setTasks([copy_tasks]);
+      Coopernet.updateTask(newTask, props.task.order);
+      props.setTasks(update_tasks);
     } catch (e) {
-      console.log('Erreur lors de la modification sur le serveur : ', e);
+      console.log("Erreur lors de la modification sur le serveur : ", e);
     }
   };
 
@@ -57,34 +47,52 @@ const Task = (props) => {
             className="d-flex justify-content-between align-items-center mt-3 border">
           <h2
               className={
-                props.task.isValidate ? 'text-decoration-line-through' : ''
+                parseInt(props.task.isValidate)
+                    ? "text-decoration-line-through"
+                    : ""
               }
           >
             {props.task.label}
           </h2>
-          <p>{props.task.description}</p>
-          <p>{props.task.ended}</p>
+          <p
+              className={
+                parseInt(props.task.isValidate)
+                    ? "text-decoration-line-through"
+                    : ""
+              }
+          >
+            {props.task.description}
+          </p>
+          <p
+              className={
+                parseInt(props.task.isValidate)
+                    ? "text-decoration-line-through"
+                    : ""
+              }
+          >
+            {props.task.ended}
+          </p>
           <div>
             <button
                 onClick={(event) => {
                   props.handleClickValidateTask(props.task.id);
                 }}
                 className={
-                  props.task.isValidate
-                      ? 'text-decoration-line-through btn btn-success me-3'
-                      : 'btn btn-success me-3'
+                  parseInt(props.task.isValidate)
+                      ? "text-decoration-line-through btn btn-success me-3"
+                      : "btn btn-success me-3"
                 }
             >
-              {props.task.isValidate ? 'Invalider' : 'Valider'}
+              {parseInt(props.task.isValidate) ? "Invalider" : "Valider"}
             </button>
             <button
                 onClick={() => {
                   handleShowEditModal();
                 }}
                 className={
-                  props.task.isValidate
-                      ? 'text-decoration-line-through btn btn-primary me-3'
-                      : 'btn btn-primary me-3'
+                  parseInt(props.task.isValidate)
+                      ? "text-decoration-line-through btn btn-primary me-3"
+                      : "btn btn-primary me-3"
                 }
             >
               Mettre à jour
@@ -94,9 +102,9 @@ const Task = (props) => {
                   props.handleClickDeleteTask(props.task.id);
                 }}
                 className={
-                  props.task.isValidate
-                      ? 'text-decoration-line-through btn btn-danger'
-                      : 'btn btn-danger'
+                  parseInt(props.task.isValidate)
+                      ? "text-decoration-line-through btn btn-danger"
+                      : "btn btn-danger"
                 }
             >
               Supprimer

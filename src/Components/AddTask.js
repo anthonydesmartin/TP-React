@@ -9,7 +9,6 @@ const AddTask = (props) => {
             show={props.showAddModal}
             onHide={props.handleCloseAddModal}
             backdrop="static"
-            keyboard={false}
         >
           <Modal.Header closeButton>
             <Modal.Title>Ajouter une tâche</Modal.Title>

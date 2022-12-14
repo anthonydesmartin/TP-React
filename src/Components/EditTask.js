@@ -7,7 +7,6 @@ const EditTask = (props) => {
             show={props.showEditModal}
             onHide={props.handleCloseEditModal}
             backdrop="static"
-            keyboard={false}
         >
           <Modal.Header closeButton>
             <Modal.Title>Ajouter une tâche</Modal.Title>
