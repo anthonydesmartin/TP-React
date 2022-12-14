@@ -1,11 +1,10 @@
 import Coopernet from "../Services/Coopernet";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import Task from "./Task";
 import AddTask from "./AddTask";
 import Connect from "./Connect";
 
 function App() {
-  const firstUpdate = useRef(true);
 
   // Déclare une nouvelle variable d'état, que l'on va appeler « count »
   // useState renvoie un tableau. Le premier élément de ce dernier est un état et le deuxième élément est une référence vers la fonction qui permet de modifier cet état.
